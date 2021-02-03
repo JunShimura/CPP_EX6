@@ -1,30 +1,35 @@
 #pragma once
 
+/// <summary>
+/// 荷物の定義
+/// </summary>
 class Pack {
-protected:
-	double weight;
 public:
-	virtual double GetPackSize() = 0;
-	virtual void InputSize() = 0;
-	virtual void InputWeight() {
+	double weight;	//重さ
+	void InputWeight() {	//重さを入力
 		std::cout << "重さを入力";
 		std::cin >> weight;
 	}
 	double GetWeight() {
 		return weight;
 	}
+	void Input() {
+		InputSize();
+		InputWeight();
+	}
+	virtual double GetPackSize() = 0;
+	virtual void InputSize() = 0;
 };
 
-class Box:public Pack {
-private :
+class Box :public Pack {
+public:
 	double width;
 	double height;
 	double depth;
-public:
 	double GetPackSize() override {
 		return width + height + depth;
 	}
-	Box(double w=0,double h=0, double d=0) {
+	Box(double w = 0, double h = 0, double d = 0) {
 		width = w;
 		height = h;
 		depth = d;
@@ -36,15 +41,13 @@ public:
 		std::cin >> height;
 		std::cout << "奥行きを入力:";
 		std::cin >> depth;
-		Pack::InputWeight();
 	}
 };
 
 class Cylinder :public Pack {
-private:
+public:
 	double radius;
 	double height;
-public:
 	double GetPackSize() override {
 		return radius * 4 + height;
 	}
@@ -53,44 +56,45 @@ public:
 		std::cin >> radius;
 		std::cout << "高さを入力";
 		std::cin >> height;
-		Pack::InputWeight();
 	}
 };
 
 
+struct PackSet {
+	double size;
+	double weight;
+};
 class PackSizeList {
 public:
-	double* size;
+	PackSet* packSet;
 	unsigned int length;
-	PackSizeList(double s[],unsigned int l) {
-		size = s;
+	PackSizeList(PackSet p[], unsigned int l) {
+		packSet = p;
 		length = l;
 	}
 };
 
 
-class Takuhai{
-private:
+class Takuhai {
+public:
 	Pack* pack;
 	PackSizeList* packSizeList;
-	double allowableWeight;
-public:
 	double GetPackSize() {
 		double judge = 0;
-		if (pack->GetWeight() <= allowableWeight) {
-			for (int i = 0; i < packSizeList->length; i++) {
-				if (pack->GetPackSize() <= packSizeList->size[i]) {
-					judge = packSizeList->size[i];
-					break;
-				}
+		double packSize = pack->GetPackSize();
+		double packWeight = pack->GetWeight();
+		for (int i = 0; i < packSizeList->length; i++) {
+			PackSet* packSet = &packSizeList->packSet[i];
+			if (packSize <= packSet->size && packWeight <= packSet->weight) {
+				judge = packSizeList->packSet[i].size;
+				break;
 			}
 		}
 		return judge;
 	}
-	Takuhai(Pack* pack, PackSizeList* packSizeList, double allowableWeight) {
-		this->pack = pack;
-		this->packSizeList = packSizeList;
-		this->allowableWeight = allowableWeight;
+	Takuhai(Pack* pk, PackSizeList* pks) {
+		pack = pk;
+		packSizeList = pks;
 	}
 };
 

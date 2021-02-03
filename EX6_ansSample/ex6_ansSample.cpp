@@ -20,13 +20,15 @@ unsigned int InputUINT(string message, unsigned int max) {
 int main()
 {
 	//クロネコのサイズ https://www.kuronekoyamato.co.jp/ytc/search/payment/size/
-	double kuronekoSize[] = { 60,80,100,120,160 };
+	PackSet kuronekoSet[]
+		= { {60,2},{80,5},{100,10},{120,15},{140,20},{160,25} };
 
 	//JPのサイズ https://www.post.japanpost.jp/send/fee/kokunai/parcel.html#01
-	double jpSize[] = { 60,80,100,120,140,160,170 };
+	PackSet jpSet[]
+		= { {60,25},{80,25},{100,25},{120,25},{140,25},{160,25},{170,25} };
 
-	//佐川のサイズ https://www.sagawa-exp.co.jp/service/takuhai/
-	double sagawaSize[] = { 160 };
+	//佐川のサイズ https://www.sagawa-exp.co.jp/send/fare/list/sagawa_faretable/faretable-3.html#ft01
+	PackSet sagawaSet[] = { {60,2},{80,5},{100,10},{140,20},{160,30 } };
 
 	unsigned int i = InputUINT("形は？（0:箱型 1:円柱)", 2);
 	Pack* pack = nullptr;
@@ -40,20 +42,20 @@ int main()
 	default:
 		break;
 	}
-	pack->InputSize();
+	pack->Input();
 
-	Takuhai* takuhai = nullptr;
+	Takuhai* takuhai=nullptr;
 
 	i = InputUINT("業者は？（0:クロネコ 1:JP 2:佐川)", 3);
 	switch (i) {
 	case 0:
-		takuhai = new Takuhai(pack, new PackSizeList(kuronekoSize, _countof(kuronekoSize)), 25);
+		takuhai = new Takuhai(pack, &PackSizeList(kuronekoSet, _countof(kuronekoSet)));
 		break;
 	case 1:
-		takuhai = new Takuhai(pack, new PackSizeList(jpSize, _countof(jpSize)), 25);
+		takuhai = new Takuhai(pack, &PackSizeList(jpSet, _countof(jpSet)));
 		break;
 	case 2:
-		takuhai = new Takuhai(pack, new PackSizeList(sagawaSize, _countof(sagawaSize)), 30);
+		takuhai = new Takuhai(pack, &PackSizeList(sagawaSet, _countof(sagawaSet)));
 		break;
 	default:
 		break;
@@ -65,7 +67,7 @@ int main()
 	else {
 		cout << "宅配では送れません";
 	}
-	delete(pack);
 	delete(takuhai);
+	delete(pack);
 	return 0;
 }
