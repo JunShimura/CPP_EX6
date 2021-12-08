@@ -11,7 +11,7 @@ unsigned int InputUINT(string message, unsigned int max) {
 			break;
 		}
 		else {
-			cout << "å…¥åŠ›ã‚¨ãƒ©ãƒ¼";
+			cout << "“ü—ÍƒGƒ‰[";
 		}
 	}
 	return i;
@@ -19,18 +19,18 @@ unsigned int InputUINT(string message, unsigned int max) {
 
 int main()
 {
-	//ã‚¯ãƒ­ãƒã‚³ã®ã‚µã‚¤ã‚º https://www.kuronekoyamato.co.jp/ytc/search/payment/size/
+	//ƒNƒƒlƒR‚ÌƒTƒCƒY https://www.kuronekoyamato.co.jp/ytc/search/payment/size/
 	PackSet kuronekoSet[]
 		= { {60,2},{80,5},{100,10},{120,15},{140,20},{160,25} };
 
-	//JPã®ã‚µã‚¤ã‚º https://www.post.japanpost.jp/send/fee/kokunai/parcel.html#01
+	//JP‚ÌƒTƒCƒY https://www.post.japanpost.jp/send/fee/kokunai/parcel.html#01
 	PackSet jpSet[]
 		= { {60,25},{80,25},{100,25},{120,25},{140,25},{160,25},{170,25} };
 
-	//ä½å·ã®ã‚µã‚¤ã‚º https://www.sagawa-exp.co.jp/send/fare/list/sagawa_faretable/faretable-3.html#ft01
+	//²ì‚ÌƒTƒCƒY https://www.sagawa-exp.co.jp/send/fare/list/sagawa_faretable/faretable-3.html#ft01
 	PackSet sagawaSet[] = { {60,2},{80,5},{100,10},{140,20},{160,30 } };
 
-	unsigned int i = InputUINT("å½¢ã¯ï¼Ÿï¼ˆ0:ç®±åž‹ 1:å††æŸ±)", 2);
+	unsigned int i = InputUINT("Œ`‚ÍHi0:” Œ^ 1:‰~’Œ)", 2);
 	Pack* pack = nullptr;
 	switch (i) {
 	case 0:
@@ -44,10 +44,10 @@ int main()
 	}
 	pack->Input();
 
-	Takuhai* takuhai=nullptr;
+	Takuhai* takuhai = nullptr;
 	PackSizeList* packSizeList = nullptr;
 
-	i = InputUINT("æ¥­è€…ã¯ï¼Ÿï¼ˆ0:ã‚¯ãƒ­ãƒã‚³ 1:JP 2:ä½å·)", 3);
+	i = InputUINT("‹ÆŽÒ‚ÍHi0:ƒNƒƒlƒR 1:JP 2:²ì)", 3);
 	switch (i) {
 	case 0:
 		packSizeList = new PackSizeList(kuronekoSet, _countof(kuronekoSet));
@@ -66,10 +66,10 @@ int main()
 	}
 	double packSize = takuhai->GetPackSize();
 	if (packSize != 0) {
-		cout << "å®…é…ã®ã‚µã‚¤ã‚ºã¯" << packSize;
+		cout << "‘î”z‚ÌƒTƒCƒY‚Í" << packSize;
 	}
 	else {
-		cout << "å®…é…ã§ã¯é€ã‚Œã¾ã›ã‚“";
+		cout << "‘î”z‚Å‚Í‘—‚ê‚Ü‚¹‚ñ";
 	}
 	delete(takuhai);
 	delete(pack);
