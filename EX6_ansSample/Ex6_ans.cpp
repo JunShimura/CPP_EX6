@@ -73,5 +73,6 @@ int main()
 	}
 	delete(takuhai);
 	delete(pack);
+	delete(packSizeList);
 	return 0;
 }
