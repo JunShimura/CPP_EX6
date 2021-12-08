@@ -11,7 +11,7 @@ unsigned int InputUINT(string message, unsigned int max) {
 			break;
 		}
 		else {
-			cout << "“ü—ÍƒGƒ‰[";
+			cout << "å…¥åŠ›ã‚¨ãƒ©ãƒ¼";
 		}
 	}
 	return i;
@@ -19,18 +19,18 @@ unsigned int InputUINT(string message, unsigned int max) {
 
 int main()
 {
-	//ƒNƒƒlƒR‚ÌƒTƒCƒY https://www.kuronekoyamato.co.jp/ytc/search/payment/size/
+	//ã‚¯ãƒ­ãƒã‚³ã®ã‚µã‚¤ã‚º https://www.kuronekoyamato.co.jp/ytc/search/payment/size/
 	PackSet kuronekoSet[]
 		= { {60,2},{80,5},{100,10},{120,15},{140,20},{160,25} };
 
-	//JP‚ÌƒTƒCƒY https://www.post.japanpost.jp/send/fee/kokunai/parcel.html#01
+	//JPã®ã‚µã‚¤ã‚º https://www.post.japanpost.jp/send/fee/kokunai/parcel.html#01
 	PackSet jpSet[]
 		= { {60,25},{80,25},{100,25},{120,25},{140,25},{160,25},{170,25} };
 
-	//²ì‚ÌƒTƒCƒY https://www.sagawa-exp.co.jp/send/fare/list/sagawa_faretable/faretable-3.html#ft01
+	//ä½å·ã®ã‚µã‚¤ã‚º https://www.sagawa-exp.co.jp/send/fare/list/sagawa_faretable/faretable-3.html#ft01
 	PackSet sagawaSet[] = { {60,2},{80,5},{100,10},{140,20},{160,30 } };
 
-	unsigned int i = InputUINT("Œ`‚ÍHi0:” Œ^ 1:‰~’Œ)", 2);
+	unsigned int i = InputUINT("å½¢ã¯ï¼Ÿï¼ˆ0:ç®±åž‹ 1:å††æŸ±)", 2);
 	Pack* pack = nullptr;
 	switch (i) {
 	case 0:
@@ -45,27 +45,31 @@ int main()
 	pack->Input();
 
 	Takuhai* takuhai=nullptr;
+	PackSizeList* packSizeList = nullptr;
 
-	i = InputUINT("‹ÆŽÒ‚ÍHi0:ƒNƒƒlƒR 1:JP 2:²ì)", 3);
+	i = InputUINT("æ¥­è€…ã¯ï¼Ÿï¼ˆ0:ã‚¯ãƒ­ãƒã‚³ 1:JP 2:ä½å·)", 3);
 	switch (i) {
 	case 0:
-		takuhai = new Takuhai(pack, &PackSizeList(kuronekoSet, _countof(kuronekoSet)));
+		packSizeList = new PackSizeList(kuronekoSet, _countof(kuronekoSet));
+		takuhai = new Takuhai(pack, packSizeList);
 		break;
 	case 1:
-		takuhai = new Takuhai(pack, &PackSizeList(jpSet, _countof(jpSet)));
+		packSizeList = new PackSizeList(jpSet, _countof(jpSet));
+		takuhai = new Takuhai(pack, packSizeList);
 		break;
 	case 2:
-		takuhai = new Takuhai(pack, &PackSizeList(sagawaSet, _countof(sagawaSet)));
+		packSizeList = new PackSizeList(sagawaSet, _countof(sagawaSet));
+		takuhai = new Takuhai(pack, packSizeList);
 		break;
 	default:
 		break;
 	}
 	double packSize = takuhai->GetPackSize();
 	if (packSize != 0) {
-		cout << "‘î”z‚ÌƒTƒCƒY‚Í" << packSize;
+		cout << "å®…é…ã®ã‚µã‚¤ã‚ºã¯" << packSize;
 	}
 	else {
-		cout << "‘î”z‚Å‚Í‘—‚ê‚Ü‚¹‚ñ";
+		cout << "å®…é…ã§ã¯é€ã‚Œã¾ã›ã‚“";
 	}
 	delete(takuhai);
 	delete(pack);
